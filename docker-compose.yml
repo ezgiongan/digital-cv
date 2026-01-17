@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres:16
+    container_name: digital-cv-db
+    environment:
+      POSTGRES_USER: cvuser
+      POSTGRES_PASSWORD: cvpass
+      POSTGRES_DB: cvdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: digital-cv-backend
+    environment:
+      DATABASE_URL: postgres://cvuser:cvpass@db:5432/cvdb
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+
+volumes:
+  pgdata:
+
