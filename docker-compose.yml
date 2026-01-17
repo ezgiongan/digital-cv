@@ -17,7 +17,7 @@ services:
       dockerfile: Dockerfile
     container_name: digital-cv-backend
     environment:
-      DATABASE_URL: postgres://cvuser:cvpass@db:5432/cvdb
+      DATABASE_URL: postgres://cvuser:cvpass@db:5432/cvdb?sslmode=disable
     depends_on:
       - db
     ports:

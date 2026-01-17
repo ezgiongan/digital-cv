@@ -4,7 +4,7 @@ import (
 	"net/http"
 
         "digital-cv-backend/internal/db"
-	"digital-cv-backend/internal/handlers"
+		"digital-cv-backend/internal/handlers"
 )
 func main() {
 	pool, err := db.Connect()
