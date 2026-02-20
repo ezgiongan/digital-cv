@@ -6,10 +6,14 @@ services:
       POSTGRES_USER: cvuser
       POSTGRES_PASSWORD: cvpass
       POSTGRES_DB: cvdb
-    ports:
-      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ./backend/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cvuser -d cvdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   backend:
     build:
@@ -18,11 +22,12 @@ services:
     container_name: digital-cv-backend
     environment:
       DATABASE_URL: postgres://cvuser:cvpass@db:5432/cvdb?sslmode=disable
+      PORT: 8080
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     ports:
       - "8080:8080"
 
 volumes:
   pgdata:
-
