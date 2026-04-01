@@ -3,14 +3,14 @@ services:
     image: postgres:16
     container_name: digital-cv-db
     environment:
-      POSTGRES_USER: cvuser
+      POSTGRES_USER: cvezgiongan
       POSTGRES_PASSWORD: cvpass
       POSTGRES_DB: cvdb
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./backend/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U cvuser -d cvdb"]
+      test: ["CMD-SHELL", "pg_isready -U cvezgiongan -d cvdb"]
       interval: 5s
       timeout: 5s
       retries: 5
